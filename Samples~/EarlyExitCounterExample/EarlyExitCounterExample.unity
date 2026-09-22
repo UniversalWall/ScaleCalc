@@ -149,7 +149,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 13efc09faf3f0964697ed42a272c633c, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UGams.ScaleCalc.Unity::UGams.ScaleCalc.Unity.ScaleFactorProbe
+  m_EditorClassIdentifier: Wayward.ScaleCalc.Unity::Wayward.ScaleCalc.Unity.ScaleFactorProbe
   prevScaleFactorField: m_PrevScaleFactor
   prevReferencePpuField: m_PrevReferencePixelsPerUnit
   targetCanvas: {fileID: 0}
