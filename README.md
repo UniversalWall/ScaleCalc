@@ -72,8 +72,4 @@ ScaleCalcResult r = ScaleCalc.Evaluate(in input);
 // r.ScaleFactor / r.ReferencePixelsPerUnit / r.CanvasSize ...
 ```
 
-界面各按钮与各列数字的读法，见开发仓库的《ScaleCalc 设计要点》与《实现文档》。
-
-## 四、与我有关
-
 MIT 许可证，见包内的 `LICENSE`，版权行是 `Copyright (c) 2026 UniversalWall`。
