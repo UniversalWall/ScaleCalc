@@ -34,7 +34,7 @@ ScaleCalc 是一套脱离 Unity 运行时的 `CanvasScaler` 换算与验证工�
 
 ```jsonc
 // Packages/manifest.json
-"com.wayward.scalecalc": "https://github.com/UniversalWall/com.wayward.scalecalc.git#v0.4.0"
+"com.wayward.scalecalc": "https://github.com/UniversalWall/ScaleCalc.git#v0.4.0"
 ```
 
 也可以把包目录整个拷进工程的 `Packages/`。改完 manifest 要开一次编辑器才会解析。

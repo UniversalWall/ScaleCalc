@@ -7,9 +7,9 @@
   "author": { "name": "UniversalWall", "url": "https://github.com/UniversalWall" },
   "license": "MIT",
   "keywords": ["ugui", "canvasscaler", "scale-factor", "editor-tool"],
-  "documentationUrl": "https://github.com/UniversalWall/com.wayward.scalecalc/blob/main/README.md",
-  "changelogUrl": "https://github.com/UniversalWall/com.wayward.scalecalc/blob/main/CHANGELOG.md",
-  "licensesUrl": "https://github.com/UniversalWall/com.wayward.scalecalc/blob/main/LICENSE",
+  "documentationUrl": "https://github.com/UniversalWall/ScaleCalc/blob/main/README.md",
+  "changelogUrl": "https://github.com/UniversalWall/ScaleCalc/blob/main/CHANGELOG.md",
+  "licensesUrl": "https://github.com/UniversalWall/ScaleCalc/blob/main/LICENSE",
   "dependencies": {
     "com.unity.ugui": "2.0.0",
     "com.unity.test-framework": "1.6.0"

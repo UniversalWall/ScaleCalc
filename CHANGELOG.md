@@ -13,6 +13,7 @@
 - README 的「安装」补一句：**npm 上也有这个包**（`npm i com.wayward.scalecalc`），同时点明 **Unity 装不了 npm 的包**（UPM 读 `package.json` 与 git，不认 npm registry），并说明 npm 那份不含包内测试。
 - README 的要求行由"不依赖任何东西"改为"运行期只用 `com.unity.ugui`，不引入第三方依赖"——原文与 `package.json` 里实际声明的 `com.unity.test-framework` 不符。
 - README「怎么用」补一张**选型台界面截图**（托管在 GitHub 附件，公开可访问；npm 页面上同样能显示）。
+- **发布仓改名**：`com.wayward.scalecalc` → **`ScaleCalc`**（仓库名对人、包名对机器——`package.json` 的 `name` 仍是 `com.wayward.scalecalc`，两者本就无需一致）。GitHub 对旧地址自动重定向，**旧安装 URL 仍然可用**。README 的安装行与 `package.json` 的三个 URL 已改指新仓名；⚠️ **npm 上已发布的 0.4.0 里仍是旧仓名**（靠重定向可访问），下次发版时一并更新。
 
 ## [0.4.0] - 2026-09-22
 
