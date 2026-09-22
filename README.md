@@ -41,7 +41,6 @@ ScaleCalc 是一套脱离 Unity 运行时的 `CanvasScaler` 换算与验证工�
 
 > **npm 上也有这个包**（`npm i com.wayward.scalecalc`，用于工具链集成或直接取源码）。
 > ⚠️ **但 Unity 装不了 npm 的包** —— UPM 读的是 `package.json` 与 git，不认 npm registry。要在 Unity 里用，请照上面的 Git URL。
-> 另外 npm 那份是按源码发布的，**不含包内测试**（`Tests/` 依赖本仓库布局，在别的工程里本来也跑不起来）。
 
 ## 三、怎么用
 
