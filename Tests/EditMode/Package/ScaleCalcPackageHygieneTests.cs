@@ -7,8 +7,8 @@ using UnityEditor.PackageManager;
 namespace Wayward.ScaleCalc.Tests
 {
     /// <summary>
-    /// 批次 4 步 4.2/4.4/4.5 的**包卫生**断言：`package.json` 的 `samples` 路径真的存在、依赖只有引擎包、
-    /// 许可证与 `LICENSE` 一致、版本与 `CHANGELOG` 一致——这些是"可脱离宿主"的前置条件（能离线静态验的部分）。
+    /// 批次 4 步 4.2/4.4/4.5 的**包卫生**断言：依赖只有引擎包、许可证与 `LICENSE` 一致、
+    /// 版本与 `CHANGELOG` 一致——这些是"可脱离宿主"的前置条件（能离线静态验的部分）。
     /// </summary>
     public sealed class ScaleCalcPackageHygieneTests
     {
@@ -17,35 +17,16 @@ namespace Wayward.ScaleCalc.Tests
 
         private static string ReadPackageFile(string relative) => File.ReadAllText(Path.Combine(PackageRoot, relative));
 
+        /// <summary>
+        /// `Q-16`（2026-09-22 用户裁定）：**作品默认不带示例** —— 示例只在用户明确要求时才建。
+        /// <para>作者若确实要加示例，删掉本断言即可（连同 `package.json` 的 `samples` 段一起加回来）。</para>
+        /// </summary>
         [Test]
-        public void Samples_AllPathsExistAndHoldScenes()
+        public void ShipsNoSamples_UnlessTheAuthorAsksForThem()
         {
             string json = ReadPackageFile("package.json");
-            Assert.That(json, Does.Contain("\"samples\""), "README + samples 是发布口径的一部分");
-
-            string samplesRoot = Path.Combine(PackageRoot, "Samples~");
-            Assert.That(Directory.Exists(samplesRoot), Is.True);
-
-            string[] folders = Directory.GetDirectories(samplesRoot);
-            Assert.That(folders.Length, Is.EqualTo(2), "两个 samples 条目：三模式对照 + 早退反例");
-
-            int sceneCount = Directory.GetFiles(samplesRoot, "*.unity", SearchOption.AllDirectories).Length;
-            Assert.That(sceneCount, Is.EqualTo(4), "三模式各一个场景 + 早退反例一个");
-
-            foreach (string folder in folders)
-            {
-                string name = Path.GetFileName(folder);
-                Assert.That(json, Does.Contain("Samples~/" + name), "每个 samples 目录都要在 package.json 里声明");
-                Assert.That(Directory.GetFiles(folder, "*.unity").Length, Is.GreaterThan(0), name + " 里要有场景");
-            }
-        }
-
-        [Test]
-        public void Samples_ScenesKeepTheirMetaPaired()
-        {
-            string samplesRoot = Path.Combine(PackageRoot, "Samples~");
-            foreach (string scene in Directory.GetFiles(samplesRoot, "*.unity", SearchOption.AllDirectories))
-                Assert.That(File.Exists(scene + ".meta"), Is.True, scene + " 缺 .meta（导入后 GUID 会变）");
+            Assert.That(json, Does.Not.Contain("\"samples\""), "默认不带示例（`Q-16`）；要加就先删掉这条断言");
+            Assert.That(Directory.Exists(Path.Combine(PackageRoot, "Samples~")), Is.False, "默认不带示例（`Q-16`）");
         }
 
         [Test]
