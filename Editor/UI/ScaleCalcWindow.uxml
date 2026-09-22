@@ -1,0 +1,56 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:VisualElement name="scale-calc-root" class="root">
+        <ui:Label text="ScaleCalc 选型台" name="title" class="title"/>
+        <ui:VisualElement name="toolbar" class="toolbar">
+            <ui:Label text="参考分辨率" class="toolbar-label"/>
+            <ui:Label text="宽" class="toolbar-label"/>
+            <ui:FloatField name="ref-width" value="1920" class="toolbar-field"/>
+            <ui:Label text="高" class="toolbar-label"/>
+            <ui:FloatField name="ref-height" value="1080" class="toolbar-field"/>
+            <ui:Label text="match（0=宽 · 1=高）" class="toolbar-label"/>
+            <ui:Slider name="match-slider" low-value="0" high-value="1" value="0.5" class="toolbar-slider"/>
+            <ui:Label text="0.50" name="match-value" class="toolbar-label"/>
+            <ui:Label text="匹配方式" class="toolbar-label"/>
+            <ui:DropdownField name="match-mode" class="toolbar-enum"/>
+            <ui:Toggle label="只看会裁" name="only-cropped" class="filter-toggle"/>
+            <ui:Toggle label="只看竖屏" name="only-portrait" class="filter-toggle"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="verdict-row" class="verdict-row">
+            <ui:VisualElement name="verdict-text" class="verdict-text">
+                <ui:Label text="（该匹配方式不使用 match）" name="match-mode-note" class="match-mode-note"/>
+                <ui:Label text="（正在计算结论…）" name="verdict-bar" class="verdict-bar"/>
+                <ui:Label text="" name="verdict-band" class="verdict-band"/>
+                <ui:Label text="" name="verdict-bars" class="verdict-bars"/>
+                <ui:Label text="" name="verdict-modes" class="verdict-modes"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="safe-area-diagram" class="safe-area-diagram"/>
+        </ui:VisualElement>
+        <ui:Foldout text="档位管理表（勾选 = 参与计算；取消勾选的仍在这里）" name="tier-foldout" class="tier-foldout">
+            <!-- 三个按钮**同一行**（`tier-toolbar`）：折叠区展开时另起一行会多占 ≈23px，
+                 把主表从「9/9 一次看全」挤到 8 行（实测读数）。 -->
+            <ui:VisualElement name="tier-toolbar" class="tier-toolbar">
+                <ui:Button text="新增一行" name="add-tier-button" class="add-tier-button"/>
+                <ui:Button text="导出档位清单…" name="export-tiers-button" class="tier-transfer-button"/>
+                <ui:Button text="导入档位清单…" name="import-tiers-button" class="tier-transfer-button"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="tier-host" class="tier-host"/>
+        </ui:Foldout>
+        <ui:Label text="（档位操作的结果会写在这一行）" name="tier-status" class="tier-status"/>
+        <!-- 表格口径图例：正文由窗口从 `ScaleFit.TableLegend()` 写入（单一真相源），这里只放非空占位文本 -->
+        <ui:Label text="（表格口径图例）" name="table-legend" class="table-legend"/>
+        <ui:VisualElement name="table-host" class="table-host"/>
+        <!-- 选中行详情（`row-detail`）**已整条撤除**：节点、样式规则、`ScaleCalcWindow.Detail.cs` /
+             `ScaleFit.Detail.cs` 一起删（删节点必须同时删规则，否则界面上留一个没人用的空块）。
+             行高亮仍在（那是列表自身的行为）。 -->
+        <ui:VisualElement name="export-row" class="export-row">
+            <ui:Button text="现场对账（会建/拆临时场景）" name="reconcile-button" class="reconcile-button"/>
+            <ui:Toggle label="自动对账（默认关）" name="auto-reconcile-toggle" class="auto-reconcile-toggle"/>
+            <ui:Button text="导出换算证据包（≥5 组）" name="export-pack-button" class="export-pack-button"/>
+            <ui:Button text="导出当前表（CSV…）" name="export-button" class="export-button"/>
+            <ui:Button text="复制结论" name="verdict-copy" class="verdict-copy"/>
+            <ui:Button text="导出设计约束单（几何口径）" name="export-constraints-button" class="export-constraints-button"/>
+            <ui:Button text="导出当前视图（所见 8 列）" name="export-view-button" class="export-view-button"/>
+            <ui:Button text="排除会裁档位" name="exclude-cropped-button" class="exclude-cropped-button"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

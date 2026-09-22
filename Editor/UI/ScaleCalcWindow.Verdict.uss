@@ -1,0 +1,133 @@
+/* ScaleCalc 选型台 · **结论区样式**（与 `ScaleCalcWindow.Verdict.cs` 同职责）
+   拆的判据 = 200 行红线 + 职责不同：主表 `.uss` 管整窗骨架与两张表，本文件只管
+   「匹配方式三选一 / 结论条 / 三方式小结」这一段。
+   🔴 **高度预算写在主表 `ScaleCalcWindow.uss` 的头注里**（加段落必须重算那份预算）。 */
+
+/* 匹配方式选择器（`DropdownField`；`EnumField` 在 `.uxml` 里没有枚举类型可依，建不出来）。
+   两条纪律：① 三选一必须能被看出"一个 CanvasScaler 上只有一个"；② 小结标题逐字带「三选一」。 */
+.toolbar-enum {
+    width: 190px;
+    margin-left: 2px;
+}
+
+/* ---- 结论区：左边是文本块，右边是**安全区示意图** ----
+   🔴 横向排布是**为了算平高度预算**：示意图 200×113 的高度被左边那几百字的文本块吸收
+   ⇒ 加它**不用抬窗口底线**。窄窗口下示意图会被挤窄（它是 fixed 宽，文本 flex-shrink）。 */
+.verdict-row {
+    flex-direction: row;
+    align-items: flex-start;
+    flex-shrink: 0;
+}
+
+.verdict-text {
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+/* ---- 单元格比例底衬：色块在文字**下面**（绝对定位 ⇒ 不占额外高度、数值照旧逐字可读）----
+   颜色与文字前缀 `裁`/`留`/`正好` **双编码**（颜色不作唯一编码）；离线行另有灰字（`.cell-offline`）。 */
+.cell-bar-host {
+    justify-content: center;
+}
+
+.cell-bar {
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+}
+
+.cell-bar-crop { background-color: rgba(235, 150, 140, 0.28); }
+
+.cell-bar-spare { background-color: rgba(230, 200, 90, 0.22); }
+
+.cell-bar-exact { background-color: rgba(120, 190, 120, 0.20); }
+
+/* 外框 = 参考画布；内框 = 安全设计区；四条边带 = 危险带（红 = 有会裁 / 黄 = 只有留白） */
+.safe-area-diagram {
+    flex-shrink: 0;
+    margin-left: 8px;
+    position: relative;
+}
+
+.diagram-outer {
+    border-width: 1px;
+    border-color: rgb(150, 150, 150);
+}
+
+.diagram-inner {
+    border-width: 1px;
+    border-color: rgb(120, 190, 120);
+    background-color: rgba(120, 190, 120, 0.10);
+}
+
+.diagram-band-crop { background-color: rgba(235, 150, 140, 0.30); }
+
+.diagram-band-spare { background-color: rgba(230, 200, 90, 0.25); }
+
+/* `Expand`/`Shrink` 不读 match ⇒ 说明必须**挨着工具栏**（那时滑块是禁用的，因果要同屏） */
+.match-mode-note {
+    color: rgb(170, 170, 170);
+    margin-bottom: 2px;
+    white-space: normal;
+    flex-shrink: 0;
+}
+
+/* 结论条：**常显**、允许换行（档位名可能很长），但数不会被截——名字与数都在这一段里 */
+.verdict-bar {
+    -unity-font-style: bold;
+    white-space: normal;
+    margin-bottom: 2px;
+    flex-shrink: 0;
+}
+
+/* 有会裁给红、全不裁给绿（**颜色不作唯一编码**：文字里本来就有"会裁 / 无档位会裁"） */
+.verdict-alert { color: rgb(235, 150, 140); }
+
+.verdict-ok { color: rgb(150, 210, 150); }
+
+/* 危险带 + 安全设计区那一行：与结论条同源（`ScaleFit.BandLine`），比结论条淡一档 */
+.verdict-band {
+    color: rgb(190, 190, 190);
+    white-space: normal;
+    margin-bottom: 2px;
+    flex-shrink: 0;
+}
+
+/* `.row-detail` 规则**已随「选中行详情」整条撤除**——
+   节点删了、规则必须跟着删（留着就是界面上一个没人用的空块 + 一份失效样式）。 */
+
+/* 字符条块：**等宽字体**——不然 `█·┊` 的格子对不齐，"条的长短"就没法一眼比 */
+.verdict-bars {
+    -unity-font-definition: initial;
+    color: rgb(200, 200, 200);
+    white-space: pre;
+    margin-bottom: 2px;
+    flex-shrink: 0;
+}
+
+/* 两个筛选开关（批 B）：只改**看的顺序**，不动工作集/结论——所以它们挨着工具栏、不带底色 */
+.filter-toggle {
+    margin-left: 10px;
+}
+
+/* 「排除会裁档位」= **会改工作集**的动作（不是筛选）⇒ 给它一层底色，与只看不改的开关区分开 */
+.exclude-cropped-button {
+    margin-left: 6px;
+    background-color: rgb(96, 78, 60);
+}
+
+/* 「匹配方式对比（三选一 …）」标题 + 3 行小结：常显，比结论条淡一档 */
+.verdict-modes {
+    color: rgb(180, 180, 180);
+    white-space: normal;
+    margin-bottom: 2px;
+    flex-shrink: 0;
+}
+
+/* 两个新按钮与既有导出按钮同排（`flex-wrap` 会换行，不会挤掉） */
+.verdict-copy {
+    margin-left: 6px;
+}
+
+.export-constraints-button {
+    margin-left: 6px;
+}

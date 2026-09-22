@@ -1,0 +1,29 @@
+{
+  "name": "com.wayward.scalecalc",
+  "version": "0.4.0",
+  "displayName": "ScaleCalc 缩放模式换算与选型台",
+  "description": "复刻 UGUI CanvasScaler 的换算链为纯函数，与引擎真值对账，并提供选型对照台。",
+  "unity": "6000.3",
+  "author": { "name": "UniversalWall", "url": "https://github.com/UniversalWall" },
+  "license": "MIT",
+  "keywords": ["ugui", "canvasscaler", "scale-factor", "editor-tool"],
+  "documentationUrl": "https://github.com/UniversalWall/GITHUB/blob/main/Works/ScaleCalc/README.md",
+  "changelogUrl": "https://github.com/UniversalWall/GITHUB/blob/main/Works/ScaleCalc/CHANGELOG.md",
+  "licensesUrl": "https://github.com/UniversalWall/GITHUB/blob/main/Works/ScaleCalc/LICENSE",
+  "dependencies": {
+    "com.unity.ugui": "2.0.0",
+    "com.unity.test-framework": "1.6.0"
+  },
+  "samples": [
+    {
+      "displayName": "三模式对照示例",
+      "description": "ConstantPixelSize / ScaleWithScreenSize / ConstantPhysicalSize 各一个场景，各自挂好 CanvasScaler 与探针。",
+      "path": "Samples~/ThreeScaleModes"
+    },
+    {
+      "displayName": "早退反例",
+      "description": "子 Canvas 上挂 CanvasScaler 完全不生效（继承根 Canvas 的 scaleFactor）；WorldSpace 画布走 dynamicPixelsPerUnit。",
+      "path": "Samples~/EarlyExitCounterExample"
+    }
+  ]
+}

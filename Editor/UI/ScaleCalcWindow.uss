@@ -1,0 +1,176 @@
+/* ScaleCalc 选型台的样式（与 .uxml 同目录、同程序集）。
+   本文件只管**整窗骨架与两张表**；结论区那一段在 `ScaleCalcWindow.Verdict.uss`、
+   逐档裁留图那一列在 `ScaleCalcWindow.Diagram.uss`（拆的判据 = 200 行红线 + 职责不同）。 */
+
+.root {
+    padding: 6px;
+    flex-grow: 1;
+    /* 🔴 不许外溢：窗口高度不够时**裁掉**，不是把内容画到邻居身上（2026-09-19 实测：外溢会让文字叠在一起） */
+    overflow: hidden;
+}
+
+.title {
+    -unity-font-style: bold;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.toolbar {
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+}
+
+.toolbar-label {
+    margin-left: 6px;
+    margin-right: 2px;
+}
+
+/* ⚠️ 输入框**不再带 label**：`.unity-base-field__label` 有编辑器默认的 `min-width: 120px`，带 label 的 140px
+   字段里输入框只剩 20px ⇒ 1920 只显示出前两位。「宽」/「高」改独立 Label，并保底覆盖 label 的 min-width。 */
+.toolbar-field {
+    width: 100px;
+}
+
+.toolbar-field > .unity-base-field__label {
+    min-width: 16px;
+}
+
+.toolbar-slider {
+    width: 200px;
+}
+
+.table-host {
+    /* 🔴 主视图：占两份余量（管理表一份）⇒"选型表占主区"与"管理表看得见"同时成立。
+       min-height 184 = 表头 24 + 内置 7 行 × 行高下限 20 + 余量 20 —— 与窗口底线是**同一个算式的两头**
+       （见下方预算头注）；行高由 `ScaleTableRowHeight.For` 按可用高度摊（夹 20~30）。 */
+    flex-grow: 2;
+    flex-shrink: 1;
+    min-height: 184px;
+    border-width: 1px;
+    border-color: rgb(64, 64, 64);
+    overflow: hidden;
+}
+
+.export-row {
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 4px;
+    flex-shrink: 0;
+}
+
+/* ---- 匹配方式三选一 + 结论条 + 三方式小结的样式：**已拆到 `ScaleCalcWindow.Verdict.uss`**
+   （拆的判据 = 200 行红线 + 职责不同——本文件只管整窗骨架与两张表）---- */
+
+/* 「现场对账」= 唯一会动场景的按钮 ⇒ 用底色让它一眼区别于两个导出按钮 */
+.reconcile-button {
+    width: 200px;
+    margin-left: 6px;
+    background-color: rgb(70, 90, 120);
+}
+
+/* 「自动对账」开关：默认关；打开后拖完控件停手一段才会对账（防抖） */
+.auto-reconcile-toggle {
+    margin-left: 10px;
+    margin-right: 4px;
+}
+
+/* 两个导出按钮各占固定宽度；行尾留白（不做路径输入框：都走保存对话框） */
+.export-pack-button {
+    width: 190px;
+    margin-left: 6px;
+}
+
+.export-button {
+    width: 160px;
+    margin-left: 6px;
+}
+
+/* 注意：节点与规则是**两条**要一起删的东西——
+   曾经出现过"`.uxml` 节点删了、规则留在原处"的情形，是源码级判据把它抓出来的。
+   ⇒ 删任何节点时，顺手在同一次改动里删掉它对应的规则。 */
+
+.cell-mismatch {
+    color: rgb(240, 120, 120);
+}
+
+/* 🔴 对账状态列：绿 = 通过。红字复用 `.cell-mismatch`、灰字复用 `.cell-offline`
+   —— 三条**同族规则都住在本文件**（同族规则不许拆到两张样式表里）。
+   颜色只是**第三重**编码：文字（`过`/`失`/`—`）与悬停文本才是主要编码。 */
+.cell-verdict-ok {
+    color: rgb(120, 200, 120);
+}
+
+.cell-offline {
+    color: rgb(150, 150, 150);
+}
+
+/* ---- 高度预算（窗口底线 `MinWindowSize` 的依据；加任何一段 UI 都要重算它）----
+   固定段 = 工具栏 + 结论区 + 档位管理表宿主 + 图例 + 导出按钮行 + 状态行。
+   历次实测：结论区那一段（匹配方式一组 ≈22 + 方式说明 18 + 结论条 18~36 + 小结 72 ≈ **130px**）
+   ⇒ 底线 680 → 810；危险带一行 + 两个筛选开关 + 「排除会裁档位」≈ +70 ⇒ 810 → 880；
+   字符条块 + 「更多列」开关 + 「导出当前视图」≈ +70 ⇒ 880 → **950**。
+
+   ⚠️ **底线只许往上抬**：算过 660 会逼出内部滚动条、断掉"一次看全内置档位"。
+   删掉底部两段（分支状态栏 + 总结行，实测 h64 + h64 ≈ 128px）后**底线仍保持 950 不动**
+   ——底线是实测出来的，删内容不等于可以顺手下调；那点余量留给"能多看见几行"。
+   📌 **管理表宿主的高度由代码给**（`ScreenTierColumns.HostHeightFor`）：跟条目数长，
+   但**最多占可用高度的 30%**——上限就是这道预算的守门人（39 档时 264px 封顶、主表仍保得住 184px 下限）。 */
+
+/* 管理表默认**展开**（服务"全量清单常驻可见"）。 */
+.tier-foldout {
+    margin-bottom: 2px;
+    flex-shrink: 0;
+}
+
+/* 管理表工具栏：三个按钮**同一行**（UI Toolkit 默认 column，不写 row 就各占一行）。 */
+.tier-toolbar {
+    flex-direction: row;
+    flex-shrink: 0;
+}
+
+/* 导入 / 导出按钮：宽度自撑（中文标签更长）；整行高度由 .add-tier-button 的 margin 决定。 */
+.tier-transfer-button {
+    flex-shrink: 0;
+}
+
+.add-tier-button {
+    width: 90px;
+    margin-bottom: 2px;
+    flex-shrink: 0;
+}
+
+/* 管理表**不参与列宽分摊**（固定宽度 ⇒ 结构性规避），但高度**跟着条目数长**
+   （早先定死 110px 时只看得见 4 行 ⇒ "行数没对上"）。
+   🔴 **高度由代码给**（`ScreenTierColumns.HostHeightFor`，纯函数）：要多少给多少，夹在
+   `[HostMinHeight 200, 可用高度 × 30%]`——上限是为了不把主表与底部顶出窗口，超出的靠列表自己滚。
+   这里只留**下限**（首帧/未布局时的保底），**不再写 `max-height`**（写死就等于把"跟着长"取消掉）。 */
+.tier-host {
+    flex-grow: 0;
+    flex-shrink: 0;
+    min-height: 200px;
+    border-width: 1px;
+    border-color: rgb(64, 64, 64);
+    overflow: hidden;
+}
+
+/* 操作反馈行：单独一行（不写进表格图例那一行，免得两件事互相盖掉）。 */
+.tier-status {
+    margin-top: 2px;
+    margin-bottom: 2px;
+    white-space: normal;
+    flex-shrink: 0;
+}
+
+/* 表格口径图例：紧贴表头上方一行说明「灰字 = 内核离线算的（未对账）」。
+   样式取向 = **弱化但不能消失**：字号不缩（缩了看不清）、用灰字降存在感，且 flex-shrink: 0
+   ——这一行被压扁就会变成叠字（高度预算的两次实测教训）。 */
+.table-legend {
+    margin-top: 2px;
+    margin-bottom: 2px;
+    color: rgb(150, 150, 150);
+    white-space: normal;
+    flex-shrink: 0;
+}

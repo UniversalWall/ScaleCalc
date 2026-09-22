@@ -1,0 +1,20 @@
+{
+    "name": "Wayward.ScaleCalc.Editor",
+    "rootNamespace": "Wayward.ScaleCalc.Editor",
+    "references": [
+        "Wayward.ScaleCalc",
+        "Wayward.ScaleCalc.Unity",
+        "UnityEngine.UI"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
