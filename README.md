@@ -28,12 +28,20 @@ ScaleCalc 是一套脱离 Unity 运行时的 `CanvasScaler` 换算与验证工�
 
 ## 二、安装
 
-需要 Unity 6000.3 或更新版本，除了自带的 `com.unity.ugui` 不依赖任何东西。
+需要 Unity 6000.3 或更新版本。运行期只用到自带的 `com.unity.ugui`，不引入任何第三方依赖。
+
+装进 Unity 工程请用 Git URL（可锁版本）：
 
 ```jsonc
 // Packages/manifest.json
 "com.wayward.scalecalc": "https://github.com/UniversalWall/com.wayward.scalecalc.git#v0.4.0"
 ```
+
+也可以把包目录整个拷进工程的 `Packages/`。改完 manifest 要开一次编辑器才会解析。
+
+> **npm 上也有这个包**（`npm i com.wayward.scalecalc`，用于工具链集成或直接取源码）。
+> ⚠️ **但 Unity 装不了 npm 的包** —— UPM 读的是 `package.json` 与 git，不认 npm registry。要在 Unity 里用，请照上面的 Git URL。
+> 另外 npm 那份是按源码发布的，**不含包内测试**（`Tests/` 依赖本仓库布局，在别的工程里本来也跑不起来）。
 
 ## 三、怎么用
 
