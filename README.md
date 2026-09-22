@@ -1,10 +1,12 @@
 # ScaleCalc · 缩放模式换算与选型台
 
-做 Unity UI 的时候，设计稿在 1920×1080 上看着挺好，换台手机就发现两边的按钮被切掉了，或者界面被拉得很开、边上空出一大片。这些毛病多半出在 UGUI 的 `CanvasScaler` 上，而引擎从来不告诉你它到底算了什么。
+ScaleCalc 是一个基于纯 C# 实现的 UGUI 多设备适配量化分析工具。
 
-ScaleCalc 就是回答这个问题的。它把 `CanvasScaler` 的换算逻辑用纯 C# 重写了一遍，拿真实 Canvas 的读数去核对，再把你打算支持的每种屏幕列出来，告诉你会裁掉多少、会留白多少。算到最后它会给出一个可以直接用的数——**安全设计区**，也就是画面正中一块所有设备都看得见的区域，重要的东西放进去就不会被裁。
+针对 `CanvasScaler` 底层换算逻辑不透明、跨设备易产生 UI 裁切或留白的问题，该工具通过重写核心算法并核对真实 Canvas 读数，提供以下客观数据支持：
 
-它给数字，不给布局方案：元素该锚在哪里不归它管。
+- 多设备数据推演：列出目标屏幕的裁切与留白量
+- 安全设计区计算：输出画面正中所有设备均可见的绝对安全区域数值
+- 明确边界：仅提供基于数据的量化结果，不干涉具体的锚点布局方案
 
 > **English** — ScaleCalc re-implements the UGUI `CanvasScaler` math as pure functions, checks it against the
 > values Unity actually writes, and reports how much each match mode crops or pads across the screen sizes you
