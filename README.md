@@ -8,9 +8,14 @@ ScaleCalc 是一个基于纯 C# 实现的 UGUI 多设备适配量化分析工具
 - 安全设计区计算：输出画面正中所有设备均可见的绝对安全区域数值
 - 明确边界：仅提供基于数据的量化结果，不干涉具体的锚点布局方案
 
-> **English** — ScaleCalc re-implements the UGUI `CanvasScaler` math as pure functions, checks it against the
-> values Unity actually writes, and reports how much each match mode crops or pads across the screen sizes you
-> care about — including the safe design area that stays visible on every device.
+> **English** — ScaleCalc is a pure-C# quantitative analysis tool for UGUI multi-device adaptation.
+> Because `CanvasScaler`'s underlying math is opaque, UI gets cropped or padded differently on every device;
+> the tool re-implements that math and checks it against readings from a real Canvas, then gives you:
+>
+> - **Multi-device projection** — how much each target screen crops or pads.
+> - **Safe design area** — the absolute area, centered on screen, that stays visible on every device.
+> - **A clear boundary** — it reports numbers only; it does not decide your anchors or layout.
+>
 > Requires Unity 6000.3+. MIT licensed, no third-party dependencies.
 
 ## 一、这是什么
