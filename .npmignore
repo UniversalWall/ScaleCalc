@@ -1,0 +1,27 @@
+# .npmignore —— npm 发布时的排除表（只影响 `npm publish` 的 tarball，不影响 git 与 UPM）
+#
+# 背景：这个包一个 package.json 同时喂两个通道 ——
+#   · UPM（Git URL 安装）走 git，需要 .meta 与 Tests/
+#   · npm 用户拿到的是源码，.meta 是 Unity 编辑器自己的资产索引、对他们毫无用处
+# 所以两条通道用不同的忽略表：`.gitignore` 不管 .meta（它们必须入库），本文件把 .meta 与 Tests 排掉。
+#
+# ⚠️ npm 的规则：`.gitignore` 在**发布时会被自动排除且不生效**；只有本文件说了算。
+#    （实测：先不放本文件时，`.meta` 之所以没进 tarball 是因为 npm 的 `.gitignore` 兜底；一旦本文件存在，兜底即失效）
+
+# ── Unity 编辑器资产索引：npm 用户不需要 ──
+*.meta
+
+# ── 包内测试：依赖本仓库布局，在消费者工程里本来就跑不起来 ──
+# （README「已知限制」里已如实说明：包内测试假设"包根 + 仓库布局"）
+Tests/
+
+# ── 本地构建/缓存产物（防手滑带进去） ──
+obj/
+[Ll]ibrary/
+[Tt]emp/
+[Ll]ogs/
+*.tgz
+*.csproj
+*.sln
+.DS_Store
+Thumbs.db
