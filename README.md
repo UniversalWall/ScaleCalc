@@ -50,6 +50,7 @@ ScaleCalc 是一套脱离 Unity 运行时的 `CanvasScaler` 换算与验证工�
 ```
 菜单：Wayward/ScaleCalc/打开选型台
 ```
+<img width="555.5" height="366" alt="图" src="https://github.com/user-attachments/assets/2527bcbf-b7dd-4829-9f3b-583a98e52c57" />
 
 窗口自上而下给出三类信息：
 
